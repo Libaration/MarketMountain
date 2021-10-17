@@ -12,7 +12,7 @@ interface dataPoint {
 
 export const fetchPrices = async (sym: string) => {
   const response = await fetch(
-    `https://min-api.cryptocompare.com/data/v2/histoday?fsym=${sym}&tsym=USD&limit=30&api_key=${process.env.REACT_APP_API_KEY}`
+    `https://min-api.cryptocompare.com/data/v2/histominute?fsym=${sym}&tsym=USD&limit=100&api_key=${process.env.REACT_APP_API_KEY}`
   );
   const responseJSON = await response.json();
   responseJSON.Data.Data.forEach((obj: dataPoint) => {

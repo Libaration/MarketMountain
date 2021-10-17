@@ -1,20 +1,28 @@
-import React, { ReactElement } from 'react';
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from 'recharts';
+import React, { ReactElement, useState, useEffect, useMemo } from 'react';
+import { AreaChart, Area, YAxis } from 'recharts';
 
 interface Props {
-  data: [];
+  ccStreamer: WebSocket;
+  btcHistory: [];
 }
 
-function Chart({ data }: Props): ReactElement {
-  return (
-    <div className="chart">
+function Chart({ ccStreamer, btcHistory }: Props): ReactElement {
+  const [data, setData] = useState([] as any);
+  ccStreamer.onmessage = function onStreamMessage(message) {
+    const parsedMessage = JSON.parse(message.data);
+
+    if (parsedMessage.PRICE) {
+      parsedMessage.close = parsedMessage.PRICE;
+      setData([...data, parsedMessage]);
+      console.log(data);
+    }
+  };
+  useEffect(() => {
+    data.push(...btcHistory);
+  }, []);
+
+  const renderChart = useMemo(() => {
+    return (
       <AreaChart
         width={500}
         height={400}
@@ -26,13 +34,19 @@ function Chart({ data }: Props): ReactElement {
           bottom: 0,
         }}
       >
-        <XAxis dataKey="time" />
-        <YAxis />
-        <Tooltip />
-        <Area type="monotone" dataKey="close" stroke="#8dc735" fill="#7fb329" />
+        <YAxis type="number" domain={['dataMin', 'dataMax']} />
+        <Area
+          isAnimationActive={false}
+          type="monotone"
+          dataKey="close"
+          stroke="#8dc735"
+          fill="#7fb329"
+          name="Price"
+        />
       </AreaChart>
-    </div>
-  );
+    );
+  }, [data]);
+  return <div className="chart">{renderChart}</div>;
 }
 
 export default Chart;

@@ -4,6 +4,16 @@ import logo from './images/logo.png';
 import { fetchPrices } from './components/FetchMethods';
 import Chart from './components/Chart';
 
+const ccStreamer = new WebSocket(
+  `wss://streamer.cryptocompare.com/v2?api_key=${process.env.REACT_APP_API_KEY}`
+);
+ccStreamer.onopen = function onStreamOpen() {
+  var subRequest = {
+    action: 'SubAdd',
+    subs: ['2~Coinbase~LTC~USD'],
+  };
+  ccStreamer.send(JSON.stringify(subRequest));
+};
 function App() {
   const [btcHistory, setBtcHistory] = useState();
   useEffect(() => {
@@ -22,7 +32,11 @@ function App() {
           <li>About</li>
         </ul>
       </header>
-      {btcHistory ? <Chart data={btcHistory} /> : 'loading'}
+      {btcHistory ? (
+        <Chart ccStreamer={ccStreamer} btcHistory={btcHistory} />
+      ) : (
+        'loading'
+      )}
     </div>
   );
 }
