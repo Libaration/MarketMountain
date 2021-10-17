@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import logo from './images/logo.png';
+import { fetchPrices } from './components/FetchMethods';
+import Chart from './components/Chart';
 
 function App() {
+  const [btcHistory, setBtcHistory] = useState();
+  useEffect(() => {
+    fetchPrices().then((res) => {
+      setBtcHistory(res);
+    });
+  }, []);
   return (
     <div className="App">
       <header className="header-gutters">
@@ -11,7 +19,7 @@ function App() {
           <li>About</li>
         </ul>
       </header>
-      dummy content
+      {btcHistory ? <Chart data={btcHistory} /> : 'loading'}
     </div>
   );
 }
