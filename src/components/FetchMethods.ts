@@ -15,9 +15,9 @@ export const fetchPrices = async (sym: string) => {
     `https://min-api.cryptocompare.com/data/v2/histominute?fsym=${sym}&tsym=USD&limit=100&api_key=${process.env.REACT_APP_API_KEY}`
   );
   const responseJSON = await response.json();
-  responseJSON.Data.Data.forEach((obj: dataPoint) => {
-    obj.time = convertTime(obj.time)!;
-  });
+  //   responseJSON.Data.Data.forEach((obj: dataPoint) => {
+  //     obj.time = convertTime(obj.time)!;
+  //   });
 
   return responseJSON.Data.Data;
 };
