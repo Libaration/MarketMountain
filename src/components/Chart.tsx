@@ -29,8 +29,7 @@ function Chart({ data }: Props): ReactElement {
         <XAxis dataKey="time" />
         <YAxis />
         <Tooltip />
-        <Area type="monotone" dataKey="open" stroke="#00FF00" fill="#fff" />
-        <Area type="monotone" dataKey="close" stroke="#ff0000" fill="#fff" />
+        <Area type="monotone" dataKey="close" stroke="#8dc735" fill="#7fb329" />
       </AreaChart>
     </div>
   );

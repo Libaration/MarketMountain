@@ -7,9 +7,12 @@ import Chart from './components/Chart';
 function App() {
   const [btcHistory, setBtcHistory] = useState();
   useEffect(() => {
-    fetchPrices().then((res) => {
-      setBtcHistory(res);
-    });
+    const fetchBtcPrices = async () => {
+      const response = await fetchPrices('ltc');
+      setBtcHistory(response);
+    };
+
+    fetchBtcPrices();
   }, []);
   return (
     <div className="App">
