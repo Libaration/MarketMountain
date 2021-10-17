@@ -34,7 +34,7 @@ function Chart({ ccStreamer, btcHistory }: Props): ReactElement {
           bottom: 0,
         }}
       >
-        <YAxis type="number" domain={['dataMin', 'dataMax']} />
+        <YAxis type="number" domain={['dataMin', 'dataMax']} tick={false} />
         <Area
           isAnimationActive={false}
           type="monotone"
