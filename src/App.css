@@ -23,6 +23,11 @@ header {
   border-radius: 20px;
 }
 
+.slider {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 .header-gutters {
   padding-left: 16px;
   padding-right: 16px;
