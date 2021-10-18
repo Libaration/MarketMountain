@@ -60,12 +60,12 @@ function App() {
       </header>
 
       {btcHistory ? (
-        <Chart ccStreamer={ccStreamer} btcHistory={btcHistory} coin="btc" />
+        <Chart ccStreamer={ccStreamer} coinHistory={btcHistory} coin="btc" />
       ) : (
         'loading'
       )}
       {btcHistory ? (
-        <Chart ccStreamer={ccStreamer} btcHistory={ltcHistory} coin="ltc" />
+        <Chart ccStreamer={ccStreamer} coinHistory={ltcHistory} coin="ltc" />
       ) : (
         'loading'
       )}

@@ -1,20 +1,19 @@
-import React, { ReactElement, useState, useEffect, useMemo } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 import { AreaChart, Area, YAxis } from 'recharts';
 
 interface Props {
   ccStreamer: WebSocket;
-  btcHistory: [];
+  coinHistory: [];
   coin: string;
 }
 
-function Chart({ ccStreamer, btcHistory, coin }: Props): ReactElement {
+function Chart({ ccStreamer, coinHistory, coin }: Props): ReactElement {
   const renderChart = useMemo(() => {
     return (
       <AreaChart
-        key={Math.random()}
         width={200}
         height={100}
-        data={btcHistory}
+        data={coinHistory}
         margin={{
           top: 50,
           right: 30,
@@ -37,7 +36,7 @@ function Chart({ ccStreamer, btcHistory, coin }: Props): ReactElement {
         />
       </AreaChart>
     );
-  }, [btcHistory]);
+  }, [coinHistory]);
   return (
     <div className="chart">
       <img src={process.env.PUBLIC_URL + `/images/${coin}.png`} alt="coin" />
