@@ -3,11 +3,17 @@ import { AreaChart, Area, YAxis } from 'recharts';
 
 interface Props {
   ccStreamer: WebSocket;
-  coinHistory: [];
+  coinHistory: any[];
   coin: string;
 }
+type Price = { PRICE: number };
 
 function Chart({ ccStreamer, coinHistory, coin }: Props): ReactElement {
+  const currentPrice = () => {
+    if (coinHistory.length > 30) {
+      return `$${coinHistory[coinHistory.length - 1].PRICE}`;
+    }
+  };
   const renderChart = useMemo(() => {
     return (
       <AreaChart
@@ -18,7 +24,7 @@ function Chart({ ccStreamer, coinHistory, coin }: Props): ReactElement {
           top: 50,
           right: 30,
           left: -50,
-          bottom: 0,
+          bottom: -0,
         }}
       >
         <YAxis
@@ -39,11 +45,15 @@ function Chart({ ccStreamer, coinHistory, coin }: Props): ReactElement {
   }, [coinHistory]);
   return (
     <div className="chart">
-      <img src={process.env.PUBLIC_URL + `/images/${coin}.png`} alt="coin" />
-      <div className="chartLabel">
-        <b>{coin.toUpperCase()}</b>
+      <div className="coin">
+        <img src={process.env.PUBLIC_URL + `/images/${coin}.png`} alt="coin" />
+
+        <div className="chartLabel">
+          <b>{coin.toUpperCase()}</b>
+        </div>
+        <div className="chartOffset">{renderChart}</div>
+        <div className="currentPrice">{currentPrice()}</div>
       </div>
-      {renderChart}
     </div>
   );
 }
