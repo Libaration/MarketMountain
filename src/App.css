@@ -5,6 +5,9 @@
   --link: #7f5af0;
   --card: #16161a;
 }
+.App {
+  overflow-x: hidden;
+}
 header {
   background-color: var(--card);
   max-height: 52px;
@@ -23,6 +26,22 @@ header {
 .header-logo {
   max-height: 52px;
   padding-right: 5px;
+}
+
+.chart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chartLabel {
+  padding-top: 40px;
+  padding-left: 10px;
+}
+
+.chart img {
+  padding-top: 40px;
+  width: 32px;
 }
 
 @media screen and (min-width: 620px) {

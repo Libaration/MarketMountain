@@ -10,19 +10,45 @@ const ccStreamer = new WebSocket(
 ccStreamer.onopen = function onStreamOpen() {
   var subRequest = {
     action: 'SubAdd',
-    subs: ['2~Coinbase~LTC~USD'],
+    subs: [`2~Coinbase~BTC~USD`, `2~Coinbase~LTC~USD`],
   };
   ccStreamer.send(JSON.stringify(subRequest));
 };
+
 function App() {
-  const [btcHistory, setBtcHistory] = useState();
+  const [btcHistory, setBtcHistory] = useState([] as any);
+  const [ltcHistory, setLtcHistory] = useState([] as any);
+
   useEffect(() => {
     const fetchBtcPrices = async () => {
+      const response = await fetchPrices('btc');
+      await setBtcHistory(btcHistory.push(...response));
+    };
+    const fetchLtcPrices = async () => {
       const response = await fetchPrices('ltc');
-      setBtcHistory(response);
+      await setLtcHistory(ltcHistory.push(...response));
     };
 
     fetchBtcPrices();
+    fetchLtcPrices();
+    ccStreamer.onmessage = function onStreamMessage(message) {
+      const parsedMessage = JSON.parse(message.data);
+      switch (parsedMessage.FROMSYMBOL) {
+        case 'BTC':
+          if (parsedMessage.PRICE) {
+            parsedMessage.close = parsedMessage.PRICE;
+            btcHistory.push(parsedMessage);
+            setBtcHistory([...btcHistory]);
+          }
+          break;
+        case 'LTC':
+          if (parsedMessage.PRICE) {
+            parsedMessage.close = parsedMessage.PRICE;
+            ltcHistory.push(parsedMessage);
+            setLtcHistory([...ltcHistory]);
+          }
+      }
+    };
   }, []);
   return (
     <div className="App">
@@ -32,8 +58,14 @@ function App() {
           <li>About</li>
         </ul>
       </header>
+
       {btcHistory ? (
-        <Chart ccStreamer={ccStreamer} btcHistory={btcHistory} />
+        <Chart ccStreamer={ccStreamer} btcHistory={btcHistory} coin="btc" />
+      ) : (
+        'loading'
+      )}
+      {btcHistory ? (
+        <Chart ccStreamer={ccStreamer} btcHistory={ltcHistory} coin="ltc" />
       ) : (
         'loading'
       )}

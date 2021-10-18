@@ -4,49 +4,49 @@ import { AreaChart, Area, YAxis } from 'recharts';
 interface Props {
   ccStreamer: WebSocket;
   btcHistory: [];
+  coin: string;
 }
 
-function Chart({ ccStreamer, btcHistory }: Props): ReactElement {
-  const [data, setData] = useState([] as any);
-  ccStreamer.onmessage = function onStreamMessage(message) {
-    const parsedMessage = JSON.parse(message.data);
-
-    if (parsedMessage.PRICE) {
-      parsedMessage.close = parsedMessage.PRICE;
-      setData([...data, parsedMessage]);
-      console.log(data);
-    }
-  };
-  useEffect(() => {
-    data.push(...btcHistory);
-  }, []);
-
+function Chart({ ccStreamer, btcHistory, coin }: Props): ReactElement {
   const renderChart = useMemo(() => {
     return (
       <AreaChart
-        width={500}
-        height={400}
-        data={data}
+        key={Math.random()}
+        width={200}
+        height={100}
+        data={btcHistory}
         margin={{
           top: 50,
           right: 30,
-          left: 0,
+          left: -50,
           bottom: 0,
         }}
       >
-        <YAxis type="number" domain={['dataMin', 'dataMax']} tick={false} />
+        <YAxis
+          type="number"
+          domain={['dataMin', 'dataMax']}
+          tick={false}
+          axisLine={false}
+        />
         <Area
           isAnimationActive={false}
           type="monotone"
           dataKey="close"
           stroke="#8dc735"
           fill="#7fb329"
-          name="Price"
         />
       </AreaChart>
     );
-  }, [data]);
-  return <div className="chart">{renderChart}</div>;
+  }, [btcHistory]);
+  return (
+    <div className="chart">
+      <img src={process.env.PUBLIC_URL + `/images/${coin}.png`} alt="coin" />
+      <div className="chartLabel">
+        <b>{coin.toUpperCase()}</b>
+      </div>
+      {renderChart}
+    </div>
+  );
 }
 
 export default Chart;
