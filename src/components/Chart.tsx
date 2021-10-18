@@ -6,7 +6,6 @@ interface Props {
   coinHistory: any[];
   coin: string;
 }
-type Price = { PRICE: number };
 
 function Chart({ ccStreamer, coinHistory, coin }: Props): ReactElement {
   const currentPrice = () => {

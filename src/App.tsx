@@ -3,6 +3,7 @@ import './App.css';
 import logo from './images/logo.png';
 import { fetchPrices } from './components/FetchMethods';
 import Chart from './components/Chart';
+import Slider from './components/Slider';
 
 const ccStreamer = new WebSocket(
   `wss://streamer.cryptocompare.com/v2?api_key=${process.env.REACT_APP_API_KEY}`
@@ -58,7 +59,7 @@ function App() {
           <li>About</li>
         </ul>
       </header>
-
+      <Slider />
       {btcHistory ? (
         <Chart ccStreamer={ccStreamer} coinHistory={btcHistory} coin="btc" />
       ) : (

@@ -54,6 +54,7 @@ header {
 .currentPrice {
   display: none;
   color: #fff;
+  font-size: 0.6em;
 }
 
 .chartLabel {
