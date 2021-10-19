@@ -9,9 +9,9 @@ interface Props {}
 
 export default function Exchange({}: Props): ReactElement {
   const lengthErrorRef = useRef<HTMLDivElement>(null);
-  const [currentToSymbol, setToSymbol] = useState('');
-  const [currentFromSymbol, setFromSymbol] = useState('');
-  const [amount, setAmount] = useState(0);
+  const [currentToSymbol, setToSymbol] = useState('USD');
+  const [currentFromSymbol, setFromSymbol] = useState('LTC');
+  const [amount, setAmount] = useState(1);
   const [converted, setConverted] = useState<any>(0);
   const handleFromSymbolChange = (e: any) => {
     setFromSymbol(e.value);
@@ -20,22 +20,16 @@ export default function Exchange({}: Props): ReactElement {
     setToSymbol(e.value);
   };
   const convert = async () => {
-    if (currentToSymbol || currentFromSymbol === '') {
-      lengthErrorRef.current!.style!.display = 'block';
-      lengthErrorRef.current!.innerHTML = 'Please make a selection';
-    } else {
-      lengthErrorRef.current!.style!.display = 'none';
-      setConverted(
-        await fetchConversion(currentFromSymbol, currentToSymbol, amount)
-      );
-    }
+    setConverted(
+      await fetchConversion(currentFromSymbol, currentToSymbol, amount)
+    );
   };
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const num: number = parseInt(e.target.value);
-    if (num > 1) {
+    if (num > 0) {
       setAmount(parseInt(e.target.value));
       lengthErrorRef.current!.style!.display = 'none';
-    } else if (num < 1) {
+    } else if (num < 0) {
       lengthErrorRef.current!.style!.display = 'block';
       lengthErrorRef.current!.innerHTML = 'Amount must be greater than 0';
     }
@@ -90,9 +84,11 @@ export default function Exchange({}: Props): ReactElement {
         onChange={handleAmountChange}
         min="1"
       />
+      <div className="convertedContainer">Rate: {converted}</div>
       <div className="tooShort error" ref={lengthErrorRef}>
         Amount must be greater than 0
       </div>
+
       <button className="signupButton convertPadding" onClick={convert}>
         Convert
       </button>

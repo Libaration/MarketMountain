@@ -34,6 +34,7 @@ export const fetchConversion = async (
   toSym: string,
   amount: number
 ) => {
+  console.log(amount, fromSym, toSym);
   const response = await fetch(
     `https://rest.coinapi.io/v1/exchangerate/${fromSym}/${toSym}`,
     {
