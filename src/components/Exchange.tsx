@@ -1,19 +1,44 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useRef } from 'react';
 import swap from '../images/swap.png';
 import Select from 'react-select';
 import './Exchange.css';
 import { fSym } from '../components/ListItems';
+import { fetchConversion } from './FetchMethods';
 
 interface Props {}
 
 export default function Exchange({}: Props): ReactElement {
+  const lengthErrorRef = useRef<HTMLDivElement>(null);
   const [currentToSymbol, setToSymbol] = useState('');
   const [currentFromSymbol, setFromSymbol] = useState('');
+  const [amount, setAmount] = useState(0);
+  const [converted, setConverted] = useState<any>(0);
   const handleFromSymbolChange = (e: any) => {
     setFromSymbol(e.value);
   };
   const handleToSymbolChange = (e: any) => {
     setToSymbol(e.value);
+  };
+  const convert = async () => {
+    if (currentToSymbol || currentFromSymbol === '') {
+      lengthErrorRef.current!.style!.display = 'block';
+      lengthErrorRef.current!.innerHTML = 'Please make a selection';
+    } else {
+      lengthErrorRef.current!.style!.display = 'none';
+      setConverted(
+        await fetchConversion(currentFromSymbol, currentToSymbol, amount)
+      );
+    }
+  };
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const num: number = parseInt(e.target.value);
+    if (num > 1) {
+      setAmount(parseInt(e.target.value));
+      lengthErrorRef.current!.style!.display = 'none';
+    } else if (num < 1) {
+      lengthErrorRef.current!.style!.display = 'block';
+      lengthErrorRef.current!.innerHTML = 'Amount must be greater than 0';
+    }
   };
   return (
     <div className="exchange">
@@ -59,8 +84,18 @@ export default function Exchange({}: Props): ReactElement {
         })}
         onChange={handleToSymbolChange}
       />
-
-      <button className="signupButton convertPadding">Convert</button>
+      <input
+        type="number"
+        name="conversionAmount"
+        onChange={handleAmountChange}
+        min="1"
+      />
+      <div className="tooShort error" ref={lengthErrorRef}>
+        Amount must be greater than 0
+      </div>
+      <button className="signupButton convertPadding" onClick={convert}>
+        Convert
+      </button>
     </div>
   );
 }

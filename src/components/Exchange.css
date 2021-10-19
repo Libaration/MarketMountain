@@ -34,3 +34,30 @@
   width: 100px;
   margin-bottom: 40px;
 }
+
+input[type='number'] {
+  background: none;
+  border: solid 1px;
+  padding: 18.5px 14px;
+  font: inherit;
+  color: white;
+  box-sizing: content-box;
+  border-radius: 5px;
+  border-color: #48535b;
+  font-size: 14px;
+  animation-timing-function: ease-in-out;
+  transition: 0.2s;
+  margin-top: 40px;
+  width: 200px;
+  height: 5px;
+}
+
+.error {
+  color: rgb(151, 16, 16);
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+.tooShort {
+  display: none;
+}

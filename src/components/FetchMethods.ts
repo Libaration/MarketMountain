@@ -28,3 +28,21 @@ const convertTime = (unixTimestamp: number | string) => {
     return `${date.getMonth()}/${date.getDate()}`;
   }
 };
+
+export const fetchConversion = async (
+  fromSym: string,
+  toSym: string,
+  amount: number
+) => {
+  const response = await fetch(
+    `https://rest.coinapi.io/v1/exchangerate/${fromSym}/${toSym}`,
+    {
+      headers: {
+        'X-CoinAPI-Key': `${process.env.REACT_APP_COIN_API_KEY}`,
+      },
+    }
+  );
+  const responseJSON = await response.json();
+  const convertedNum = ((await responseJSON.rate) * amount).toFixed(2);
+  return convertedNum;
+};
