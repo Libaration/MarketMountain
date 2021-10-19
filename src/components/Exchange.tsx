@@ -84,7 +84,7 @@ export default function Exchange({}: Props): ReactElement {
         onChange={handleAmountChange}
         min="1"
       />
-      <div className="convertedContainer">Rate: {converted}</div>
+
       <div className="tooShort error" ref={lengthErrorRef}>
         Amount must be greater than 0
       </div>
@@ -92,6 +92,7 @@ export default function Exchange({}: Props): ReactElement {
       <button className="signupButton convertPadding" onClick={convert}>
         Convert
       </button>
+      <div className="convertedContainer">Rate: {converted}</div>
     </div>
   );
 }
