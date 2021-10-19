@@ -5,6 +5,7 @@ import { fetchPrices } from './components/FetchMethods';
 import Chart from './components/Chart';
 import Slider from './components/Slider';
 import Signup from './components/Signup';
+import Exchange from './components/Exchange';
 
 const ccStreamer = new WebSocket(
   `wss://streamer.cryptocompare.com/v2?api_key=${process.env.REACT_APP_API_KEY}`
@@ -72,6 +73,7 @@ function App() {
         'loading'
       )}
       <Signup />
+      <Exchange />
     </div>
   );
 }
