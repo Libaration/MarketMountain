@@ -23,14 +23,15 @@ export default function CoinContainer({}: Props): ReactElement {
           });
         })()}
       </div>
-      <Switch>
-        <Route path="/coins/:coin">dsfdfdsfdsfsfsf</Route>
-        <Route path="/coins/:coin">dsfdfdsfdsfsfsf</Route>
-      </Switch>
-      <div className="side flex1">
-        <span id="welcome">Welcome to the markets</span>
 
-        <img src={btcside} id="sideBanner1" alt="side banner" />
+      <div className="side flex1">
+        <Switch>
+          <Route path="/coins/:coin">dsfdfdsfdsfsfsf</Route>
+          <div id="welcomediv">
+            <span id="welcome">Welcome to the markets</span>
+            <img src={btcside} id="sideBanner1" alt="side banner" />
+          </div>
+        </Switch>
       </div>
     </div>
   );
