@@ -10,9 +10,6 @@
   overflow-x: hidden;
 }
 header {
-  margin-top: 10px;
-  margin-left: 5px;
-  margin-right: 5px;
   background-color: var(--card);
   max-height: 52px;
   display: flex;
@@ -20,7 +17,6 @@ header {
   align-items: center;
   color: #fff;
   font-size: 1em;
-  border-radius: 20px;
 }
 
 .slider {

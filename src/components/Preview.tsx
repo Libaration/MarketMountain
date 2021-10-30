@@ -3,8 +3,8 @@ import Chart from './Chart';
 import Slider from './Slider';
 import Signup from './Signup';
 import Exchange from './Exchange';
-import logo from '../images/logo.png';
 import { fetchPrices } from '../components/FetchMethods';
+import { useLocation } from 'wouter';
 interface Props {}
 const ccStreamer = new WebSocket(
   `wss://streamer.cryptocompare.com/v2?api_key=${process.env.REACT_APP_API_KEY}`
@@ -18,6 +18,7 @@ ccStreamer.onopen = function onStreamOpen() {
 };
 
 export default function Preview({}: Props): ReactElement {
+  const [location, setLocation] = useLocation();
   const [btcHistory, setBtcHistory] = useState([] as any);
   const [ltcHistory, setLtcHistory] = useState([] as any);
 
@@ -54,12 +55,6 @@ export default function Preview({}: Props): ReactElement {
   }, []);
   return (
     <>
-      <header className="header-gutters">
-        <img src={logo} alt="logo" className="header-logo" />
-        <ul>
-          <li>About</li>
-        </ul>
-      </header>
       <Slider />
       {btcHistory ? (
         <Chart ccStreamer={ccStreamer} coinHistory={btcHistory} coin="btc" />
@@ -71,7 +66,7 @@ export default function Preview({}: Props): ReactElement {
       ) : (
         'loading'
       )}
-      <Signup />
+      <Signup redirect={setLocation} />
       <Exchange />
     </>
   );

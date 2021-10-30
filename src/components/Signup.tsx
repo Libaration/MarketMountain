@@ -1,18 +1,22 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import './Signup.css';
 import logo from '../images/logo.png';
-import { useLocation } from 'wouter';
-interface Props {}
+import { Redirect } from 'wouter';
+interface Props {
+  redirect: (arg0: string) => void;
+}
 interface State {}
 
 class Signup extends Component<Props, State> {
   private overlayRef: React.RefObject<HTMLDivElement>;
   private popupRef: React.RefObject<HTMLDivElement>;
+
   constructor(props: Props) {
     super(props);
     this.overlayRef = React.createRef();
     this.popupRef = React.createRef();
   }
+
   state = {
     email: 'demo@demo.com',
     emailconfirm: 'demo@demo.com',
@@ -40,7 +44,8 @@ class Signup extends Component<Props, State> {
     if (this.state.email !== this.state.emailconfirm) {
       alert('Emails do not match');
     } else {
-      alert('success');
+      // window.location = '/coins' as unknown as Location;
+      this.props.redirect('/coins');
     }
   };
 
