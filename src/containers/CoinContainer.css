@@ -1,10 +1,15 @@
 .CoinContainer {
   height: 100%;
   display: flex;
-  flex-direction: column;
   margin-top: 1em;
   margin-left: 1em;
   margin-right: 1em;
+  flex-wrap: wrap;
+}
+
+.coinColumn {
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .coin_show {
@@ -20,8 +25,34 @@
   font-size: 30px;
   color: var(--highlight);
 
-  transition: 0.5s ease-out;
+  transition: 0.3s ease-out;
 }
 .coin_show:hover {
-  filter: invert(1);
+  transform: scale(1.1);
+  color: white;
+  box-shadow: 8px 16px 16px hsl(0deg 0% 0% / 0.2);
+  cursor: pointer;
+}
+.flex1 {
+  flex: 1;
+}
+#welcome {
+  font-size: 20px;
+}
+.side {
+  display: flex;
+  align-items: center;
+  padding-left: 100px;
+  padding-right: 72px;
+}
+#sideBanner1 {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+.coin_content {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
