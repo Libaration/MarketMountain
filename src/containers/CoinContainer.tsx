@@ -1,8 +1,9 @@
 import React, { ReactElement } from 'react';
 import btcside from '../images/btcside.png';
 import './CoinContainer.css';
-import { Link } from 'wouter';
+import { Link, Route, Switch } from 'react-router-dom';
 import { allCoins } from '../components/Globals';
+import Preview from '../components/Preview';
 interface Props {}
 
 export default function CoinContainer({}: Props): ReactElement {
@@ -13,7 +14,7 @@ export default function CoinContainer({}: Props): ReactElement {
           return allCoins.map((coin) => {
             return (
               <>
-                <Link href={`/coins/${coin}`}>
+                <Link to={`/coins/${coin}`}>
                   <div className="coin_show">{coin}</div>
                 </Link>
                 <br />
@@ -22,6 +23,10 @@ export default function CoinContainer({}: Props): ReactElement {
           });
         })()}
       </div>
+      <Switch>
+        <Route path="/coins/:coin">dsfdfdsfdsfsfsf</Route>
+        <Route path="/coins/:coin">dsfdfdsfdsfsfsf</Route>
+      </Switch>
       <div className="side flex1">
         <span id="welcome">Welcome to the markets</span>
 

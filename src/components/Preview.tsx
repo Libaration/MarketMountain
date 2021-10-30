@@ -4,7 +4,7 @@ import Slider from './Slider';
 import Signup from './Signup';
 import Exchange from './Exchange';
 import { fetchPrices } from '../components/FetchMethods';
-import { useLocation } from 'wouter';
+
 interface Props {}
 const ccStreamer = new WebSocket(
   `wss://streamer.cryptocompare.com/v2?api_key=${process.env.REACT_APP_API_KEY}`
@@ -18,7 +18,6 @@ ccStreamer.onopen = function onStreamOpen() {
 };
 
 export default function Preview({}: Props): ReactElement {
-  const [location, setLocation] = useLocation();
   const [btcHistory, setBtcHistory] = useState([] as any);
   const [ltcHistory, setLtcHistory] = useState([] as any);
 
@@ -66,7 +65,7 @@ export default function Preview({}: Props): ReactElement {
       ) : (
         'loading'
       )}
-      <Signup redirect={setLocation} />
+      <Signup />
       <Exchange />
     </>
   );

@@ -1,10 +1,8 @@
 import React, { Component, useState } from 'react';
 import './Signup.css';
 import logo from '../images/logo.png';
-import { Redirect } from 'wouter';
-interface Props {
-  redirect: (arg0: string) => void;
-}
+
+interface Props {}
 interface State {}
 
 class Signup extends Component<Props, State> {
@@ -45,7 +43,6 @@ class Signup extends Component<Props, State> {
       alert('Emails do not match');
     } else {
       // window.location = '/coins' as unknown as Location;
-      this.props.redirect('/coins');
     }
   };
 
