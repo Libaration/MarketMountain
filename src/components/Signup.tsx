@@ -13,8 +13,8 @@ class Signup extends Component<Props, State> {
     this.popupRef = React.createRef();
   }
   state = {
-    email: 'Email Address',
-    emailconfirm: 'Confirm Email',
+    email: 'demo@demo.com',
+    emailconfirm: 'demo@demo.com',
     password: 'Password',
   };
   handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,9 +33,12 @@ class Signup extends Component<Props, State> {
     this.overlayRef!.current!.style.display = 'none';
     this.popupRef!.current!.style.display = 'none';
   };
-  signUpClick = () => {
+  signUpClick = (e: React.MouseEvent) => {
+    e.preventDefault();
     if (this.state.email !== this.state.emailconfirm) {
       alert('Emails do not match');
+    } else {
+      alert('success');
     }
   };
 
