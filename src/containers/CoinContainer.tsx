@@ -13,7 +13,9 @@ export default function CoinContainer({}: Props): ReactElement {
           return allCoins.map((coin) => {
             return (
               <>
-                <div className="coin_show">{coin}</div>
+                <Link href={`/coins/${coin}`}>
+                  <div className="coin_show">{coin}</div>
+                </Link>
                 <br />
               </>
             );

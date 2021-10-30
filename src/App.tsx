@@ -4,7 +4,12 @@ import Preview from './components/Preview';
 import { Route, Switch, Link } from 'wouter';
 import logo from './images/logo.png';
 import CoinContainer from './containers/CoinContainer';
-
+import { allCoins } from './components/Globals';
+const renderCoinRoutes: any = () => {
+  return allCoins.map((coin) => {
+    return <Route path={`/coins/${coin}`} component={Preview} />;
+  });
+};
 function App() {
   return (
     <div className="App">
@@ -19,6 +24,7 @@ function App() {
         </ul>
       </header>
       <Switch>
+        {renderCoinRoutes()}
         <Route path="/coins" component={CoinContainer} />
         <Route path="/" component={Preview} />
       </Switch>
