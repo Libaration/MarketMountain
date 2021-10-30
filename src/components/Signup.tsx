@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Signup.css';
 import logo from '../images/logo.png';
+import { useLocation } from 'wouter';
 interface Props {}
 interface State {}
 
@@ -17,6 +18,7 @@ class Signup extends Component<Props, State> {
     emailconfirm: 'demo@demo.com',
     password: 'Password',
   };
+
   handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
       [e.target.name]: e.target.value,
