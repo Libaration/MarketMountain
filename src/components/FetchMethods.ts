@@ -49,7 +49,7 @@ export const fetchConversion = async (
 
 export const fetchCandle = async (sym: string) => {
   const response = await fetch(
-    `https://rest.coinapi.io/v1/ohlcv/BITSTAMP_SPOT_${sym}_USD/latest?period_id=1MIN`,
+    `https://rest.coinapi.io/v1/ohlcv/BITSTAMP_SPOT_${sym}_USD/latest?period_id=1DAY`,
     {
       headers: {
         'X-CoinAPI-Key': `${process.env.REACT_APP_COIN_API_KEY}`,
@@ -57,5 +57,5 @@ export const fetchCandle = async (sym: string) => {
     }
   );
   const responseJSON = await response.json();
-  console.log(responseJSON);
+  return await responseJSON;
 };
