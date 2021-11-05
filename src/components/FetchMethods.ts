@@ -9,7 +9,25 @@ interface dataPoint {
   conversionType: string;
   conversionSymbol: string;
 }
-
+interface candleStick {
+  price_close: number;
+  price_high: number;
+  price_low: number;
+  price_open: number;
+  time_close: string;
+  time_open: string;
+  time_period_end: string;
+  time_period_start: string;
+  trades_count: number;
+  volume_traded: number;
+}
+interface candleStickDataPoint {
+  x: string;
+  open: number;
+  close: number;
+  low: number;
+  high: number;
+}
 export const fetchPrices = async (sym: string) => {
   const response = await fetch(
     `https://min-api.cryptocompare.com/data/v2/histominute?fsym=${sym}&tsym=USD&limit=30&api_key=${process.env.REACT_APP_API_KEY}`
@@ -57,5 +75,16 @@ export const fetchCandle = async (sym: string) => {
     }
   );
   const responseJSON = await response.json();
-  return await responseJSON;
+  const updatedObjs = <any>[];
+  responseJSON.map((obj: candleStick) => {
+    let newCandle = {
+      x: obj.time_open,
+      open: obj.price_open,
+      close: obj.price_close,
+      low: obj.price_low,
+      high: obj.price_high,
+    };
+    updatedObjs.push(newCandle);
+  });
+  return updatedObjs;
 };

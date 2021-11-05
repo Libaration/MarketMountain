@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchCandle } from '../components/FetchMethods';
+import { VictoryChart, VictoryCandlestick } from 'victory';
 interface Props {}
 
 function CoinShow({}: Props): ReactElement {
@@ -14,7 +15,15 @@ function CoinShow({}: Props): ReactElement {
   useEffect(() => {
     fetchData();
   }, [coin]);
-  return <div className="marketchart">{coin}</div>;
+  return (
+    <div className="marketchart">
+      {coin}
+      <VictoryCandlestick
+        candleColors={{ positive: '#70D25F', negative: '#C70039' }}
+        data={data}
+      />
+    </div>
+  );
 }
 
 export default CoinShow;
