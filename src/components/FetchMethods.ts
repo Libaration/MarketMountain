@@ -75,6 +75,7 @@ export const fetchCandle = async (sym: string) => {
     }
   );
   const responseJSON = await response.json();
+  console.log(responseJSON);
   const updatedObjs = <any>[];
   responseJSON.map((obj: candleStick) => {
     let newCandle = {
