@@ -17,7 +17,9 @@ function App() {
             </a>
           </Link>
           <ul>
-            <li>About</li>
+            <Link to="/coins">
+              <li>Market</li>
+            </Link>
           </ul>
         </header>
         <Switch>

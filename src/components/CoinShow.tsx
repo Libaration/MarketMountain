@@ -18,7 +18,7 @@ function CoinShow({}: Props): ReactElement {
   }, [coin]);
   const renderChart = () => {
     return (
-      <VictoryChart domainPadding={{ x: 0, y: 5 }}>
+      <VictoryChart domainPadding={{ x: 20, y: 5 }}>
         <VictoryCandlestick
           animate={{
             duration: 500,
@@ -32,6 +32,10 @@ function CoinShow({}: Props): ReactElement {
   };
   return (
     <div className="marketchart">
+      <h5 style={{ color: 'red' }}>
+        I'm under construction every github push automatically updates me.
+        Sometimes I might be rate limited or not functional c:
+      </h5>
       {coin}
       {renderChart()}
     </div>
