@@ -7,7 +7,7 @@ interface Props {}
 
 function CoinShow({}: Props): ReactElement {
   let { coin } = useParams<{ coin: string }>();
-  const [data, setData] = useState();
+  const [data, setData] = useState<any>();
   const fetchData = async () => {
     const returnedData = await fetchCandle(coin);
     console.log(returnedData);
@@ -16,9 +16,8 @@ function CoinShow({}: Props): ReactElement {
   useEffect(() => {
     fetchData();
   }, [coin]);
-  return (
-    <div className="marketchart">
-      {coin}
+  const renderChart = () => {
+    return (
       <VictoryChart domainPadding={{ x: 0, y: 5 }}>
         <VictoryCandlestick
           animate={{
@@ -29,6 +28,12 @@ function CoinShow({}: Props): ReactElement {
           data={data}
         />
       </VictoryChart>
+    );
+  };
+  return (
+    <div className="marketchart">
+      {coin}
+      {renderChart()}
     </div>
   );
 }

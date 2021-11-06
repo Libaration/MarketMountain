@@ -10,16 +10,15 @@ interface dataPoint {
   conversionSymbol: string;
 }
 interface candleStick {
-  price_close: number;
-  price_high: number;
-  price_low: number;
-  price_open: number;
-  time_close: string;
-  time_open: string;
-  time_period_end: string;
-  time_period_start: string;
-  trades_count: number;
-  volume_traded: number;
+  close: number;
+  high: number;
+  low: number;
+  open: number;
+  coversionSymbol: string;
+  conversionType: string;
+  time: number;
+  volumefrom: number;
+  volumeto: number;
 }
 interface candleStickDataPoint {
   x: string;
@@ -67,25 +66,24 @@ export const fetchConversion = async (
 
 export const fetchCandle = async (sym: string) => {
   const response = await fetch(
-    `https://rest.coinapi.io/v1/ohlcv/BITSTAMP_SPOT_${sym}_USD/latest?period_id=1DAY`,
+    `https://min-api.cryptocompare.com/data/v2/histoday?fsym=${sym}&tsym=USD&limit=10`,
     {
       headers: {
-        'X-CoinAPI-Key': `${process.env.REACT_APP_COIN_API_KEY}`,
+        authorization: `${process.env.REACT_APP_API_KEY}`,
       },
     }
   );
   const responseJSON = await response.json();
-  console.log(responseJSON);
-  const updatedObjs = <any>[];
-  responseJSON.map((obj: candleStick) => {
-    let newCandle = {
-      x: obj.time_open,
-      open: obj.price_open,
-      close: obj.price_close,
-      low: obj.price_low,
-      high: obj.price_high,
-    };
-    updatedObjs.push(newCandle);
+  const candleData = responseJSON.Data.Data;
+  let updatedObjs: candleStickDataPoint[] = [];
+  candleData.map((obj: candleStick) => {
+    updatedObjs.push({
+      x: obj.time.toString(),
+      close: obj.close,
+      high: obj.high,
+      low: obj.low,
+      open: obj.open,
+    });
   });
   return updatedObjs;
 };
